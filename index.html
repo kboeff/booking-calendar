@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calendar</title>
+  <style>
+    .today {
+      color: red;
+    }
+
+    .inactive {
+      color: grey;
+    }
+
+    .active {
+      color: green;
+      background-color: greenyellow;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="calendar-container"></div>
+  <div id="output"></div>
+  
+  <script>
+    function tableCreate() {
+      var bgMonths = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
+      var weekdays = ['Пон', 'Вто', 'Сря', 'Чет', 'Пет', 'Съб', 'Нед'];
+      var bookingDates = [13, 22, 29, 31];
+
+      var today = new Date();
+      var day = today.getDate();
+      var month = today.getMonth();
+      var year = today.getFullYear();
+      var daysInMonth = new Date(year, month, 0).getDate();
+      var monthStart = (new Date(year, month, 1).getDay()) || 7;
+
+      var output = document.getElementById('output');
+      output.innerHTML = `today: ${day}.${month+1}.${year}, days in ${bgMonths[month]}: ${daysInMonth}, month starts at ${monthStart}`;
+
+
+      var body = document.body;
+      var tbl  = document.createElement('table');
+      tbl.style.width  = '200px';
+      tbl.style.border = '1px solid black';
+      var count = 0;
+      
+      
+      for (var i = 0; i < 7; i++) {
+        var tr = tbl.insertRow();
+        for (var j = 0; j < 7; j++) {
+          var td = tr.insertCell();
+          td.setAttribute('align', 'center');
+
+          if (i === 0) {
+            td.appendChild(document.createTextNode(weekdays[j]));
+            td.setAttribute('class', 'header-row');    
+          } else {
+            td.setAttribute('id', ++count);
+            var cellNum = count - (monthStart - 1);
+            cellNum < 1 || cellNum > daysInMonth ? cellNum = "" : cellNum = cellNum.toString();
+            td.appendChild(document.createTextNode(cellNum));
+            if (cellNum === day.toString()) {
+              td.setAttribute('class', 'today');
+            } else if (bookingDates.indexOf(+cellNum) !== -1) {
+              td.setAttribute('class', 'active');
+            } else {
+              td.setAttribute('class', 'inactive')
+            } 
+          }
+        }
+      }
+      body.appendChild(tbl);
+    }
+    tableCreate();
+  </script>
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <script src="calendar.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/7.6.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="/__/firebase/7.6.1/firebase-analytics.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+
+</body>
+</html>

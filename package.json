@@ -1,0 +1,22 @@
+{
+  "name": "booking-calendar",
+  "version": "1.0.0",
+  "description": "book dates",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kboeff/booking-calendar.git"
+  },
+  "keywords": [
+    "calendar"
+  ],
+  "author": "kbo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kboeff/booking-calendar/issues"
+  },
+  "homepage": "https://github.com/kboeff/booking-calendar#readme"
+}
